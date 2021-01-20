@@ -73,4 +73,3 @@ jobs:
       - name: Build all projects
         run: |
           yarn build
-          yarn build-storybook
