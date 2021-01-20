@@ -14,8 +14,10 @@
     "node": ">=10",
     "yarn": "^1.17.0"
   },
+  "main": "dist/index.js",
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "scripts": {
     "build": "rm -rf dist & tsc",
