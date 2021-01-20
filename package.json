@@ -39,7 +39,10 @@
       "prettier --write"
     ]
   },
-  "dependencies": {},
+  "dependencies": {
+    "@storybook/node-logger": "^6.1.14",
+    "postcss": "^7.0.35"
+  },
   "devDependencies": {
     "@types/webpack": "^4.41.26",
     "@types/webpack-env": "^1.16.0",
