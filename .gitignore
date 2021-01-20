@@ -1,0 +1,15 @@
+# General
+.cache
+.DS_store
+node_modules
+yarn-error.log
+
+# IDEs
+.idea
+.vscode
+
+# Builds
+dist
+storybook-static
+example/*/build
+example/*/storybook-static

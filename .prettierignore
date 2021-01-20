@@ -1,0 +1,5 @@
+# Builds
+dist
+storybook-static
+example/build
+example/storybook-static

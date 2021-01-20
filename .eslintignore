@@ -1,0 +1,13 @@
+# General
+node_modules
+
+# Builds
+dist
+
+# Examples
+example/src/serviceWorker.*
+example/build
+example/storybook-static
+
+# ESLint ignores 'hidden' folders by default.
+!.storybook
