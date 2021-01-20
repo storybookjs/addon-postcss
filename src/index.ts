@@ -9,10 +9,10 @@ export const webpack = (
   webpackConfig: Configuration = {},
   options: { postcss?: PostcssFactory },
 ): Configuration => {
-  const postcssFactory = options.postcss ?? postcss;
+  const postcssFactory = options?.postcss ?? postcss;
   const { version } = postcssFactory();
 
-  logger.info(`=> Using PostCSS preset with version ${version}`);
+  logger.info(`=> Using PostCSS preset with postcss@${version}`);
 
   return {
     ...webpackConfig,
