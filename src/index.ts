@@ -2,9 +2,7 @@ import { Configuration } from 'webpack';
 import { logger } from '@storybook/node-logger';
 import postcss from 'postcss';
 
-type PostcssFactory = (
-  plugins?: postcss.AcceptedPlugin[] | undefined,
-) => postcss.Processor;
+type PostcssFactory = (plugins?: postcss.AcceptedPlugin[]) => postcss.Processor;
 
 // TODO(blaine): Should we take PostCSS config in plugin options?
 export const webpack = (
