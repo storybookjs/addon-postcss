@@ -5,9 +5,7 @@ node_modules
 dist
 
 # Examples
-example/src/serviceWorker.*
-example/build
-example/storybook-static
+example
 
 # ESLint ignores 'hidden' folders by default.
 !.storybook
