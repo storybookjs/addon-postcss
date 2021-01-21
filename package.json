@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-postcss",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Storybook addon used to run the PostCSS preprocessor against your stories.",
   "license": "MIT",
   "bugs": {
