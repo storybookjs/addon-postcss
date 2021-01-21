@@ -1,4 +1,4 @@
-import { Configuration, RuleSetRule, RuleSetUseItem } from 'webpack';
+import type { Configuration, RuleSetRule, RuleSetUseItem } from 'webpack';
 import { logger } from '@storybook/node-logger';
 import postcss from 'postcss';
 
