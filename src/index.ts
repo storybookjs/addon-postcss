@@ -1,15 +1,58 @@
-import { Configuration } from 'webpack';
+import { Configuration, RuleSetRule, RuleSetUseItem } from 'webpack';
 import { logger } from '@storybook/node-logger';
 import postcss from 'postcss';
 
-type PostcssFactory = (plugins?: postcss.AcceptedPlugin[]) => postcss.Processor;
+type StyleLoaderOptions = Record<string, unknown>;
+type CssLoaderOptions = Record<string, unknown> & {
+  importLoaders?: number;
+};
 
-// TODO(blaine): Should we take PostCSS config in plugin options?
+type PostcssLoaderOptions = Record<string, unknown> & {
+  implementation?: typeof postcss;
+};
+
+interface Options {
+  styleLoaderOptions?: StyleLoaderOptions | false;
+  cssLoaderOptions?: CssLoaderOptions | false;
+  postcssLoaderOptions?: PostcssLoaderOptions | false;
+  rule?: RuleSetRule;
+}
+
+function wrapLoader(
+  loader: string,
+  options?:
+    | StyleLoaderOptions
+    | CssLoaderOptions
+    | PostcssLoaderOptions
+    | false,
+): RuleSetUseItem[] {
+  if (options === false) {
+    return [];
+  }
+
+  return [{ loader, options }];
+}
+
 export const webpack = (
   webpackConfig: Configuration = {},
-  options: { postcss?: PostcssFactory },
+  options: Options = {},
 ): Configuration => {
-  const postcssFactory = options?.postcss ?? postcss;
+  const { styleLoaderOptions, postcssLoaderOptions, rule = {} } = options;
+
+  let { cssLoaderOptions } = options;
+
+  if (typeof cssLoaderOptions === 'object') {
+    cssLoaderOptions = {
+      ...cssLoaderOptions,
+      importLoaders: 1, // We always need to apply postcss-loader before css-loader
+    };
+  }
+
+  let postcssFactory = postcss;
+  if (typeof postcssLoaderOptions === 'object') {
+    postcssFactory = postcssLoaderOptions?.implementation ?? postcss;
+  }
+
   const { version } = postcssFactory();
 
   logger.info(`=> Using PostCSS preset with postcss@${version}`);
@@ -23,20 +66,14 @@ export const webpack = (
         {
           test: /\.css$/,
           sideEffects: true,
+          ...rule,
           use: [
-            require.resolve('style-loader'),
-            {
-              loader: require.resolve('css-loader'),
-              options: {
-                importLoaders: 1,
-              },
-            },
-            {
-              loader: require.resolve('postcss-loader'),
-              options: {
-                implementation: postcssFactory,
-              },
-            },
+            ...wrapLoader(require.resolve('style-loader'), styleLoaderOptions),
+            ...wrapLoader(require.resolve('css-loader'), cssLoaderOptions),
+            ...wrapLoader(
+              require.resolve('postcss-loader'),
+              postcssLoaderOptions,
+            ),
           ],
         },
       ],
