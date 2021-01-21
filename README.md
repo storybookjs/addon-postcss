@@ -32,7 +32,7 @@ module.exports = {
 
 ## PostCSS 8+
 
-If your project requires you to be using PostCSS v8, you can swap the included PostCSS by passing it as an option to this addon.
+If your project requires you to be using PostCSS v8, you can replace the included PostCSS by passing `postcssLoaderOptions` to this addon.
 
 First, you'll need to install PostCSS v8 as a dependency of your project:
 
@@ -49,7 +49,9 @@ module.exports = {
 +   {
 +     name: '@storybook/addon-postcss',
 +     options: {
-+       postcss: require('postcss'),
++       postcssLoaderOptions: {
++         implementation: require('postcss'),
++       },
 +     },
 +   },
   ]
@@ -61,3 +63,9 @@ When running Storybook, you'll see the version of PostCSS being used in the logs
 ```sh
 info => Using PostCSS preset with postcss@8.2.4
 ```
+
+## Loader Options
+
+You can specify loader options for `style-loader`, `css-loader`, and `postcss-loader` by passing options to this addon as `styleLoaderOptions`, `cssLoaderOptions`, or `postcssLoaderOptions` respectively.
+
+You can also configure the loader rule by overriding the `rule` option.
