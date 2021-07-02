@@ -33,7 +33,7 @@ function wrapLoader(
   return [{ loader, options }];
 }
 
-export const webpack = (
+export const webpackFinal = (
   webpackConfig: Configuration = {},
   options: Options = {},
 ): Configuration => {
@@ -57,26 +57,47 @@ export const webpack = (
 
   logger.info(`=> Using PostCSS preset with postcss@${version}`);
 
+  const { rules = [] } = webpackConfig.module || {};
+
+  const prevCssRuleIdx = rules.findIndex(
+    ({ test }) => test?.toString() === '/\\.css$/',
+  );
+  const cssRuleIdx = prevCssRuleIdx === -1 ? rules.length : prevCssRuleIdx;
+  const rulesBefore = rules.slice(0, cssRuleIdx);
+  const rulesAfter = rules.slice(cssRuleIdx + 1);
+
+  const cssRule = {
+    test: /\.css$/,
+    sideEffects: true,
+    exclude: /\.module\.css$/,
+    ...rule,
+    use: [
+      ...wrapLoader(require.resolve('style-loader'), styleLoaderOptions),
+      ...wrapLoader(require.resolve('css-loader'), cssLoaderOptions),
+      ...wrapLoader(require.resolve('postcss-loader'), postcssLoaderOptions),
+    ],
+  };
+
+  const cssModulesRule = {
+    test: /\.css$/,
+    include: /\.module\.css$/,
+    sideEffects: true,
+    ...rule,
+    use: [
+      ...wrapLoader(require.resolve('style-loader'), styleLoaderOptions),
+      ...wrapLoader(require.resolve('css-loader'), {
+        ...cssLoaderOptions,
+        modules: true,
+      }),
+      ...wrapLoader(require.resolve('postcss-loader'), postcssLoaderOptions),
+    ],
+  };
+
   return {
     ...webpackConfig,
     module: {
       ...webpackConfig.module,
-      rules: [
-        ...(webpackConfig.module?.rules ?? []),
-        {
-          test: /\.css$/,
-          sideEffects: true,
-          ...rule,
-          use: [
-            ...wrapLoader(require.resolve('style-loader'), styleLoaderOptions),
-            ...wrapLoader(require.resolve('css-loader'), cssLoaderOptions),
-            ...wrapLoader(
-              require.resolve('postcss-loader'),
-              postcssLoaderOptions,
-            ),
-          ],
-        },
-      ],
+      rules: [...rulesBefore, cssRule, cssModulesRule, ...rulesAfter],
     },
   };
 };

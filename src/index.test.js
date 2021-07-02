@@ -1,5 +1,5 @@
 import { logger } from '@storybook/node-logger';
-import { webpack } from './index.ts';
+import { webpackFinal } from './index.ts';
 
 jest.mock('@storybook/node-logger');
 
@@ -24,14 +24,14 @@ describe('webpack hook', () => {
         rules: ['dummy-loader'],
       },
     };
-    const config = webpack(configFixture);
+    const config = webpackFinal(configFixture);
     expect(config.module.rules[0]).toEqual('dummy-loader');
     expect(config.module.rules[1]).toMatchObject(loaderMatcher);
   });
 
   test('applying to an empty webpack config', () => {
     const configFixture = {};
-    const config = webpack(configFixture);
+    const config = webpackFinal(configFixture);
     expect(config.module.rules[0]).toMatchObject(loaderMatcher);
   });
 
@@ -39,7 +39,7 @@ describe('webpack hook', () => {
     const version = '99.99.99';
     const configFixture = {};
     const fakePostcss = () => ({ version });
-    const config = webpack(configFixture, {
+    const config = webpackFinal(configFixture, {
       postcssLoaderOptions: {
         implementation: fakePostcss,
       },
@@ -61,7 +61,7 @@ describe('webpack hook', () => {
 
   test('always ensures importLoaders: 1 on css-loader', () => {
     const configFixture = {};
-    const config = webpack(configFixture, {
+    const config = webpackFinal(configFixture, {
       cssLoaderOptions: {
         importLoaders: 2,
       },
@@ -80,7 +80,7 @@ describe('webpack hook', () => {
 
   test('disables all loaders if their options are set to false', () => {
     const configFixture = {};
-    const config = webpack(configFixture, {
+    const config = webpackFinal(configFixture, {
       styleLoaderOptions: false,
       cssLoaderOptions: false,
       postcssLoaderOptions: false,
@@ -92,7 +92,7 @@ describe('webpack hook', () => {
 
   test('overrides rule properties with option', () => {
     const configFixture = {};
-    const config = webpack(configFixture, {
+    const config = webpackFinal(configFixture, {
       rule: {
         sideEffects: false,
       },
