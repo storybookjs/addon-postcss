@@ -17,8 +17,6 @@ const withTests = {
   ],
 };
 
-const modules = process.env.BABEL_ESM === 'true' ? false : 'auto';
-
 module.exports = {
   presets: [
     [
@@ -27,8 +25,8 @@ module.exports = {
         shippedProposals: true,
         useBuiltIns: 'usage',
         corejs: '3',
-        targets: 'defaults',
-        modules,
+        targets: { node: 'current' },
+        modules: 'auto',
       },
     ],
     '@babel/preset-typescript',

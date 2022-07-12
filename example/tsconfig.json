@@ -2,17 +2,16 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
-    "types": ["webpack-env", "node"],
+    "types": ["webpack-env"],
     "declaration": true,
     "downlevelIteration": true,
-    "moduleResolution": "Node",
     "esModuleInterop": true,
     "lib": ["esnext"],
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ES2015"
+    "target": "es5"
   },
-  "include": ["src/**/*"],
-  "exclude": ["src/**/*.test.js"]
+  "include": ["stories/**/*", ".storybook/*"],
+  "exclude": ["*.test.js"]
 }

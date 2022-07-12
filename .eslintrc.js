@@ -1,10 +1,6 @@
-const error = 2;
-const warn = 1; // eslint-disable-line no-unused-vars
-const off = 0;
-
 module.exports = {
   root: true,
-  extends: ['airbnb', 'plugin:jest/recommended', 'prettier', 'prettier/react'],
+  extends: ['plugin:jest/recommended', 'prettier', 'plugin:import/recommended'],
   parser: 'babel-eslint',
   env: {
     es6: true,
@@ -30,10 +26,9 @@ module.exports = {
         project: './tsconfig.json',
       },
       rules: {
-        'import/extensions': off, // [warn, { ts: 'never', tsx: 'never' }],
-        'import/no-default-export': error,
-        'import/prefer-default-export': off,
-        'react/jsx-filename-extension': off,
+        'import/extensions': 'off', // [warn, { ts: 'never', tsx: 'never' }],
+        'import/no-default-export': 'error',
+        'import/prefer-default-export': 'off',
       },
       settings: {
         'import/parsers': {
