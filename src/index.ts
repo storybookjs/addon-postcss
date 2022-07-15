@@ -63,8 +63,10 @@ export const webpack = (
       ...webpackConfig.module,
       rules: [
         ...(
-          (webpackConfig.module?.rules ?? []) as unknown as RuleSetRule[]
-        ).filter((r) => r.layer !== 'storybook_css'),
+          (webpackConfig.module?.rules ?? []) as unknown as (RuleSetRule & {
+            custom_id?: string;
+          })[]
+        ).filter((r) => r.custom_id !== 'storybook_css'),
         {
           test: /\.css$/,
           sideEffects: true,
