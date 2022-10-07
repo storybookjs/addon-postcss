@@ -64,7 +64,7 @@ export const webpack = (
       rules: [
         ...(webpackConfig.module?.rules ?? []),
         {
-          test: /\.css$/,
+          test: /\.(?:post)?css$/,
           sideEffects: true,
           ...rule,
           use: [
