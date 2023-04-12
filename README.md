@@ -1,3 +1,5 @@
+🚨 DEPRECATED: This package in unmaintained and deprecated in favor of [`@storybook/addon-styling`](https://storybook.js.org/addons/@storybook/addon-styling/)
+
 # Storybook Addon PostCSS
 
 The Storybook PostCSS addon can be used to run the PostCSS preprocessor against your stories in [Storybook](https://storybook.js.org).
