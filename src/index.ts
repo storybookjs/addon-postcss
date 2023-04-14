@@ -62,16 +62,26 @@ export const webpack = (
     module: {
       ...webpackConfig.module,
       rules: [
-        ...(webpackConfig.module?.rules ?? []),
+        ...(
+          (webpackConfig.module?.rules ?? []) as unknown as (RuleSetRule & {
+            custom_id?: string;
+          })[]
+        ).filter((r) => r.custom_id !== 'storybook_css'),
         {
           test: /\.css$/,
           sideEffects: true,
           ...rule,
           use: [
-            ...wrapLoader(require.resolve('style-loader'), styleLoaderOptions),
-            ...wrapLoader(require.resolve('css-loader'), cssLoaderOptions),
             ...wrapLoader(
-              require.resolve('postcss-loader'),
+              require.resolve('style-loader').toString(),
+              styleLoaderOptions,
+            ),
+            ...wrapLoader(
+              require.resolve('css-loader').toString(),
+              cssLoaderOptions,
+            ),
+            ...wrapLoader(
+              require.resolve('postcss-loader').toString(),
               postcssLoaderOptions,
             ),
           ],
