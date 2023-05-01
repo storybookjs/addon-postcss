@@ -11,8 +11,7 @@
     "url": "https://github.com/storybookjs/addon-postcss.git"
   },
   "engines": {
-    "node": ">=10",
-    "yarn": "^1.17.0"
+    "node": ">=10"
   },
   "main": "dist/index.js",
   "files": [
@@ -21,11 +20,11 @@
   ],
   "scripts": {
     "build": "rm -rf dist & tsc",
-    "lint": "yarn lint-code && yarn lint-style -c",
+    "lint": "npm run lint-code && npm run lint-style -c",
     "lint-code": "eslint '{example,src}/**/*.{js,ts,tsx}'",
-    "lint-style": "yarn prettier '{example,src}/**/*.{js,ts,tsx,css,html,json,md,mdx,scss,yml}'",
+    "lint-style": "prettier '{example,src}/**/*.{js,ts,tsx,css,html,json,md,mdx,scss,yml}'",
     "test": "jest --passWithNoTests",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "npm run build"
   },
   "husky": {
     "hooks": {
