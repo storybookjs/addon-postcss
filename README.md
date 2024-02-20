@@ -1,4 +1,4 @@
-🚨 DEPRECATED: This package in unmaintained and deprecated in favor of [`@storybook/addon-styling`](https://storybook.js.org/addons/@storybook/addon-styling/)
+🚨 DEPRECATED: This package is unmaintained and deprecated in favor of [@storybook/addon-styling-webpack](https://github.com/storybookjs/addon-styling-webpack) and [@storybook/addon-themes](https://github.com/storybookjs/storybook/tree/next/code/addons/themes)
 
 # Storybook Addon PostCSS
 
