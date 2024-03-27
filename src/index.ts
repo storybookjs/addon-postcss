@@ -68,6 +68,7 @@ export const webpack = (
           sideEffects: true,
           ...rule,
           use: [
+            ...rule.use || [],
             ...wrapLoader(require.resolve('style-loader'), styleLoaderOptions),
             ...wrapLoader(require.resolve('css-loader'), cssLoaderOptions),
             ...wrapLoader(
